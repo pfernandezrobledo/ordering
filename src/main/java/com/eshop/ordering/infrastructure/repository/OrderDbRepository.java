@@ -6,18 +6,19 @@ import com.eshop.ordering.domain.entities.Order;
 import com.eshop.ordering.domain.repository.OrderRepository;
 
 @Component
-public class OrderDbRepository implements OrderRepository{
+public class OrderDbRepository implements OrderRepository {
 
+    private OrderDbMemDataProvider dataProvider;
 
-    
-    public OrderDbRepository(){
-
+    public OrderDbRepository(OrderDbMemDataProvider dataProvider) {
+        this.dataProvider = dataProvider;
     }
 
     @Override
     public void saveOrder(Order order) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'saveOrder'");
+        // MAp to a DTO object
+        
+        this.dataProvider.saveOrder(order);
     }
 
     @Override
@@ -31,5 +32,5 @@ public class OrderDbRepository implements OrderRepository{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getOrdersForCustomer'");
     }
-    
+
 }
