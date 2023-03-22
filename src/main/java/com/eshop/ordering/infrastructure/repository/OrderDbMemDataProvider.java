@@ -1,6 +1,8 @@
 package com.eshop.ordering.infrastructure.repository;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Component;
@@ -14,5 +16,10 @@ public class OrderDbMemDataProvider {
 
     public void saveOrder(Order order) {
         orderMap.put(order.getId(), order);
+    }
+
+    public Collection<Order> getAllOrders(){
+        
+        return orderMap.values();
     }
 }

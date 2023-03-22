@@ -60,6 +60,8 @@ public class OrderAppService implements OrderService {
 
         Order order = new Order(command.getCustomerId(), products);
 
+
+
         this.repository.saveOrder(order);
 
         return order;

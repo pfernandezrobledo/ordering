@@ -1,5 +1,6 @@
 package com.eshop.ordering.api.controllers;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eshop.ordering.domain.entities.Order;
+import com.eshop.ordering.domain.readModels.OrderDraftSummaryModel;
+import com.eshop.ordering.domain.repository.OrderRepository;
 import com.eshop.ordering.domain.services.OrderService;
 import com.eshop.ordering.service.commands.SubmitDraftOrderCommand;
 
@@ -29,10 +33,12 @@ import jakarta.validation.Valid;
 public class OrderController {
 
     private OrderService orderService;
+    private OrderRepository orderRepository;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(OrderService orderService, OrderRepository orderRepository) {
         this.orderService = orderService;
+        this.orderRepository = orderRepository;
     }
 
     @PostMapping("/draft")
@@ -67,6 +73,26 @@ public class OrderController {
         }
 
     }
+
+
+
+    @GetMapping("/draft")
+    public ResponseEntity<Collection<Order>> getAllDraftOrders(){
+
+        Collection<Order> orders = this.orderRepository.getAllDraftOrders();
+
+        return ResponseEntity.ok(orders);
+    }
+    
+
+    @GetMapping("/qry/draft")
+    public ResponseEntity<Collection<OrderDraftSummaryModel>> getDraftOrderSummaries(){
+
+        Collection<OrderDraftSummaryModel> orders = this.orderRepository.getDraftOrderSummaries();
+
+        return ResponseEntity.ok(orders);
+    }
+
 
 
 
